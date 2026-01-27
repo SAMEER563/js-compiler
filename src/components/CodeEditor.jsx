@@ -26,9 +26,7 @@ const CodeEditor = ({ value, onChange, theme }) => {
             isDark ? 'text-gray-300' : 'text-gray-700'
           }`}>script.js</span>
         </div>
-        <div className={`text-xs ${
-          isDark ? 'text-gray-400' : 'text-gray-600'
-        }`}>JavaScript ES6+</div>
+      
       </div>
       <div className="flex-1">
         <Editor
