@@ -80,7 +80,7 @@ const OutputPanel = ({ output, theme }) => {
                   {item.type === 'error' && '❌ '}
                   {item.type === 'warn' && '⚠️ '}
                   {item.type === 'info' && 'ℹ️ '}
-                  {item.type === 'log' && '▶️ '}
+                  {item.type === 'log' && '➡️ '}
                   {formatMessage(item.message)}
                   {item.lineNumber && (
                     <span className={`ml-2 text-xs font-bold ${
