@@ -158,7 +158,7 @@ function App() {
             <CodeEditor value={code} onChange={handleCodeChange} theme={theme} />
           </Panel>
           
-          <Separator className="w-1 bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500 hover:w-2 transition-all cursor-col-resize shadow-lg" />
+          {/* <Separator className="w-0.5 bg-gray-400 hover:w-2 transition-all cursor-col-resize shadow-lg" /> */}
           
           <Panel defaultSize={50} minSize={30}>
             <OutputPanel output={output} theme={theme} />
