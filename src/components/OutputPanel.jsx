@@ -51,11 +51,7 @@ const OutputPanel = ({ output, theme }) => {
     <div className={`h-full w-full flex flex-col shadow-inner transition-colors duration-300 ${
       isDark ? 'bg-[#1e1e1e]' : 'bg-white'
     }`}>
-      <div className={`px-5 py-3 border-b flex items-center transition-colors duration-300 ${
-        isDark 
-          ? 'bg-gradient-to-r from-gray-800 to-gray-900 border-gray-700' 
-          : 'bg-gradient-to-r from-gray-100 to-gray-200 border-gray-300'
-      }`}>
+      <div className= "px-5 py-3  flex items-center" >
         <div className="flex items-center gap-3">
           <h2 className={`font-semibold text-sm ${
             isDark ? 'text-white' : 'text-gray-800'
