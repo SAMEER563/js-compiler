@@ -1,6 +1,13 @@
 import { FaPlay, FaTrash, FaCode, FaMoon, FaSun } from 'react-icons/fa';
 
-const Header = ({ onRun, onClear, isRunning, theme, onToggleTheme }) => {
+const Header = ({ 
+  onRun, 
+  onClear, 
+  isRunning, 
+  theme, 
+  onToggleTheme, 
+  executionTime
+}) => {
   const isDark = theme === 'dark';
 
   return (
@@ -9,7 +16,7 @@ const Header = ({ onRun, onClear, isRunning, theme, onToggleTheme }) => {
     isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-gray-200'
   }`}
 >
-  <div className="flex items-center justify-between px-8 py-6">
+  <div className="flex items-center justify-between   px-8 py-6">
     {/* LEFT SIDE */}
     <div className="flex items-center gap-5">
       <div
@@ -41,6 +48,18 @@ const Header = ({ onRun, onClear, isRunning, theme, onToggleTheme }) => {
 
     {/* RIGHT SIDE */}
     <div className="flex items-center gap-4">
+      {executionTime && (
+        <div
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium ${
+            isDark
+              ? 'bg-green-900/30 text-green-400 border border-green-700'
+              : 'bg-green-50 text-green-700 border border-green-200'
+          }`}
+        >
+          <span className="font-bold">⚡ {executionTime}ms</span>
+        </div>
+      )}
+
       {isRunning && (
         <div
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium ${
@@ -63,6 +82,7 @@ const Header = ({ onRun, onClear, isRunning, theme, onToggleTheme }) => {
       : 'bg-white text-black  '
     } 
     disabled:opacity-50`}
+  title="Run Code (Ctrl+Enter)"
 >
   <FaPlay className= "text-sm text-green-500 " />
   Run
@@ -75,6 +95,7 @@ const Header = ({ onRun, onClear, isRunning, theme, onToggleTheme }) => {
       ? 'bg-black text-white hover:opacity-90' 
       : 'bg-white text-black'
     }`}
+  title="Clear Output (Ctrl+L)"
 >
   <FaTrash className= "text-sm text-red-500" />
   Clear
