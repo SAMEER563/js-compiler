@@ -11,3 +11,37 @@ html, body, #root {
   width: 100%;
   overflow: hidden;
 }
+
+/* Error line highlighting in Monaco Editor */
+.errorLineDecoration {
+  background: rgba(255, 0, 0, 0.1);
+  border-left: 3px solid #ff0000;
+}
+
+.errorLineGlyph {
+  background: #ff0000;
+  width: 5px !important;
+}
+
+.errorLineGutter {
+  background: rgba(255, 0, 0, 0.2);
+  width: 5px !important;
+  margin-left: 3px;
+}
+
+/* Fade-in animation for output items */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
+  opacity: 0;
+}

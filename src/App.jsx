@@ -20,6 +20,8 @@ function App() {
   const [output, setOutput] = useState([]);
   const [isRunning, setIsRunning] = useState(false);
   const [theme, setTheme] = useState('dark');
+  const [executionTime, setExecutionTime] = useState(null);
+  const [errorLine, setErrorLine] = useState(null);
 
   const toggleTheme = () => {
     setTheme(prevTheme => prevTheme === 'dark' ? 'light' : 'dark');
@@ -27,6 +29,8 @@ function App() {
 
   const executeCode = () => {
     setIsRunning(true);
+    setErrorLine(null);
+    const startTime = performance.now();
     const outputArray = [];
 
     // Backup original console methods
@@ -102,6 +106,10 @@ function App() {
         lineNumber: lineNumber,
         timestamp: new Date().toLocaleTimeString()
       });
+      
+      if (lineNumber) {
+        setErrorLine(lineNumber);
+      }
     } finally {
       // Restore original console methods
       console.log = originalLog;
@@ -109,6 +117,9 @@ function App() {
       console.warn = originalWarn;
       console.info = originalInfo;
       
+      const endTime = performance.now();
+      const execTime = (endTime - startTime).toFixed(2);
+      setExecutionTime(execTime);
       setIsRunning(false);
     }
 
@@ -117,11 +128,69 @@ function App() {
 
   const clearOutput = () => {
     setOutput([]);
+    setExecutionTime(null);
+    setErrorLine(null);
   };
 
   const handleCodeChange = (newCode) => {
     setCode(newCode);
   };
+
+  const copyCodeToClipboard = () => {
+    navigator.clipboard.writeText(code).then(() => {
+      alert('Code copied to clipboard!');
+    }).catch((err) => {
+      console.error('Failed to copy code:', err);
+      // Fallback method
+      const textarea = document.createElement('textarea');
+      textarea.value = code;
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        alert('Code copied to clipboard!');
+      } catch (e) {
+        alert('Failed to copy code. Please try again.');
+      }
+      document.body.removeChild(textarea);
+    });
+  };
+
+  const shareCode = () => {
+    const encoded = btoa(encodeURIComponent(code));
+    const url = `${window.location.origin}${window.location.pathname}?code=${encoded}`;
+    navigator.clipboard.writeText(url).then(() => {
+      alert('Share link copied to clipboard!');
+    }).catch((err) => {
+      console.error('Failed to copy share link:', err);
+      // Fallback method
+      const textarea = document.createElement('textarea');
+      textarea.value = url;
+      document.body.appendChild(textarea);
+      textarea.select();
+      try {
+        document.execCommand('copy');
+        alert('Share link copied to clipboard!');
+      } catch (e) {
+        alert('Failed to copy share link. Please try again.');
+      }
+      document.body.removeChild(textarea);
+    });
+  };
+
+  // Load shared code from URL on mount
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const sharedCode = params.get('code');
+    if (sharedCode) {
+      try {
+        const decoded = decodeURIComponent(atob(sharedCode));
+        setCode(decoded);
+      } catch (e) {
+        console.error('Failed to load shared code');
+      }
+    }
+  }, []);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -135,6 +204,11 @@ function App() {
       if ((e.ctrlKey || e.metaKey) && e.key === 'l') {
         e.preventDefault();
         clearOutput();
+      }
+      // Ctrl/Cmd + S to share
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        shareCode();
       }
     };
 
@@ -150,12 +224,20 @@ function App() {
         isRunning={isRunning}
         theme={theme}
         onToggleTheme={toggleTheme}
+        executionTime={executionTime}
       />
       
       <div className="flex-1 overflow-hidden p-2">
         <Group direction="horizontal" className="h-full rounded-xl overflow-hidden shadow-2xl">
           <Panel defaultSize={50} minSize={30}>
-            <CodeEditor value={code} onChange={handleCodeChange} theme={theme} />
+            <CodeEditor 
+              value={code} 
+              onChange={handleCodeChange} 
+              theme={theme} 
+              errorLine={errorLine}
+              onCopyCode={copyCodeToClipboard}
+              onShareCode={shareCode}
+            />
           </Panel>
           
           {/* <Separator className="w-0.5 bg-gray-400 hover:w-2 transition-all cursor-col-resize shadow-lg" /> */}
