@@ -71,7 +71,11 @@ const OutputPanel = ({ output, theme }) => {
         ) : (
           <div className="space-y-2">
             {output.map((item, index) => (
-              <div key={index} className="font-mono text-sm">
+              <div 
+                key={index} 
+                className="font-mono text-sm animate-fadeIn"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
                 <span className={`${getTextColor(item.type)} break-all whitespace-pre-wrap leading-relaxed`}>
                   {item.type === 'error' && '❌ '}
                   {item.type === 'warn' && '⚠️ '}
