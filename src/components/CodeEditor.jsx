@@ -67,13 +67,7 @@ const CodeEditor = ({ value, onChange, theme, errorLine, onCopyCode, onShareCode
               e.stopPropagation();
               onCopyCode();
             }}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition ${
-              isDark
-                ? 'bg-slate-700 text-gray-200 hover:bg-slate-600'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
-            title="Copy Code"
-          >
+            className= "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition " >
             <FaCopy className="text-xs text-blue-500" />
             Copy
           </button>
@@ -84,13 +78,8 @@ const CodeEditor = ({ value, onChange, theme, errorLine, onCopyCode, onShareCode
               e.stopPropagation();
               onShareCode();
             }}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition ${
-              isDark
-                ? 'bg-slate-700 text-gray-200 hover:bg-slate-600'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
-            title="Share Code (Ctrl+S)"
-          >
+            className= "flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium transition " >
+          
             <FaShare className="text-xs text-orange-500" />
             Share
           </button>
