@@ -9,6 +9,7 @@ const Header = ({
   executionTime
 }) => {
   const isDark = theme === 'dark';
+  
 
   return (
     <header
