@@ -10,7 +10,6 @@ const Header = ({
 }) => {
   const isDark = theme === 'dark';
   
-
   return (
     <header
   className={` border-b transition-colors duration-300 ${
